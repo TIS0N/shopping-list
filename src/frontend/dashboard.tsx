@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import shoppingLists from "../data/shoppingList"; // Make sure the shoppingLists data is accessible
+import { getStoredLists } from "../utils/localStorage";
 import itemsList, { Item } from "../data/itemList";
 import { Dropdown } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -9,6 +9,7 @@ import { mdiCheck, mdiRefresh } from "@mdi/js";
 
 const Dashboard = () => {
   const { listId } = useParams<{ listId: string }>(); // Retrieve listId from the URL
+  const shoppingLists = getStoredLists();
   const selectedList = shoppingLists.find((list) => list.id === listId);
   const [items, setItems] = useState<Item[]>([]);
 
