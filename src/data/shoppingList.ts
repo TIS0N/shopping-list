@@ -2,7 +2,7 @@ export type List = {
     id: string;
     ownerId: string;
     userName: string;
-    state: "active" | "archived";
+    state: "Active" | "Archived";
     shoppingListName: string;
     invitedUsers: string[];
 };
@@ -14,7 +14,7 @@ const shoppingLists: List[] = [
       userName: "Jason Momoa",
       invitedUsers: ["147258369", "963852741"],
       shoppingListName: "Dune snack",
-      state: "active"
+      state: "Active"
     },
     {
       id: "0dab81ff68de9dcd292146f078f9249f",
@@ -22,7 +22,7 @@ const shoppingLists: List[] = [
       userName: "Stephan kadner",
       invitedUsers: [""],
       shoppingListName: "Sausage party",
-      state: "active"
+      state: "Active"
     },
     {
       id: "e59befd586e23b9332ada388b5c1d7da",
@@ -30,7 +30,7 @@ const shoppingLists: List[] = [
       userName: "Tony Stark",
       invitedUsers: ["123456789", "963852741"],
       shoppingListName: "Protein needs",
-      state: "active"
+      state: "Active"
     },
     {
       id: "e3779d1512ede29f49569f4d46d80c15",
@@ -38,7 +38,7 @@ const shoppingLists: List[] = [
       userName: "Peter Moonlit",
       invitedUsers: ["987654321"],
       shoppingListName: "healthy food",
-      state: "active"
+      state: "Active"
     },
     {
       id: "c94babed23c685af69c3849641df008b",
@@ -46,7 +46,7 @@ const shoppingLists: List[] = [
       userName: "James Bond",
       invitedUsers: ["123456789"],
       shoppingListName: "Secret snacks",
-      state: "active"
+      state: "Active"
     },
     {
       id: "afa55b1c3537c060666133a3e7337994",
@@ -54,7 +54,7 @@ const shoppingLists: List[] = [
       userName: "Jason Momoa",
       invitedUsers: ["987654321", "963852741"],
       shoppingListName: "Grill party",
-      state: "active"
+      state: "Active"
     },
     {
       id: "284dda39a7e9067389876da14827f79d",
@@ -62,7 +62,7 @@ const shoppingLists: List[] = [
       userName: "Scarlet White",
       invitedUsers: ["147258369"],
       shoppingListName: "Friuts",
-      state: "active"
+      state: "Active"
     },
     {
         id: "284dda39a7e9067389876xc15827f79z",
@@ -70,7 +70,7 @@ const shoppingLists: List[] = [
         userName: "Scarlet White",
         invitedUsers: ["147258369", "123456789"],
         shoppingListName: "Chocolate Cake",
-        state: "archived"
+        state: "Archived"
       }
   ];
   

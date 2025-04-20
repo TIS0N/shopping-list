@@ -31,3 +31,16 @@
 #list:hover{
   background-color: #4d5059;
 }
+
+#createList{
+  padding: 20px;
+  margin-bottom: 20px;
+  border-style: none;
+  border-radius: 5px;
+  font-size:large;
+  font-weight: bolder;
+}
+
+.offcanvas-header .btn-close {
+  filter: invert(1);
+}
