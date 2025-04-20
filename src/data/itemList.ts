@@ -204,6 +204,24 @@ const itemsList: Item[] = [
       state: "active",
       shoppingListId: "c94babed23c685af69c3849641df008b"
     },
+    {
+      id: "644761e0f2564c928fd6713fd64edd0f",
+      itemName: "Chocolate",
+      state: "completed",
+      shoppingListId: "284dda39a7e9067389876xc15827f79z"
+    },
+    {
+      id: "644761e0f2564c928fd6913fd64edd0f",
+      itemName: "Flour",
+      state: "completed",
+      shoppingListId: "284dda39a7e9067389876xc15827f79z"
+    },
+    {
+      id: "644761e0f2564c928fd6723fd64edd0f",
+      itemName: "Eggs",
+      state: "completed",
+      shoppingListId: "284dda39a7e9067389876xc15827f79z"
+    },
 ];
     
     export default itemsList;

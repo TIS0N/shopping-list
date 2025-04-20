@@ -1,0 +1,50 @@
+.listInfo{
+  display: flex;
+  flex-direction:row;
+  border-style: none;
+  border-color: black;
+  background-color: rgb(180, 180, 180);
+  margin: 0 40px;
+  padding: 20px;
+  border-radius: 5px;
+
+}
+
+#listStateInfo{
+  display: inline-flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.listSection {
+  margin: 20px 40px;
+}
+
+.itemCard {
+  background-color: #2e5671;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  color: white;
+}
+
+.itemCard.completed {
+  background-color: #4D4D4D;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.itemCard{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  margin-left: 10px;
+  cursor: pointer;
+  color: white;
+}
+

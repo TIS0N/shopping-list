@@ -1,3 +1,9 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .app-container {
     display: flex;
     height: 100vh;
@@ -6,6 +12,11 @@
   .main-content {
     flex: 1;
     padding: 40px;
-    background-color: #171F30;
   }
   
+  body, html{
+    background-color: white;
+    color: white;
+  }
+
+ 

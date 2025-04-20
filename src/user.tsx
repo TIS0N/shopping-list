@@ -11,16 +11,48 @@ import React, {
 type User = {
   id: string;
   name: string;
+  email: string;
+  password: string;
 };
 
 // 2. Static list of users
 const USERS: User[] = [
-  { id: "123456789", name: "Jason Momoa" },
-  { id: "987654321", name: "Stephan kadner" },
-  { id: "147258369", name: "Tony Stark" },
-  { id: "963852741", name: "Peter Moonlit" },
-  { id: "741852963", name: "James Bond" },
-  { id: "741834563", name: "Scarlet White" },
+  {
+    id: "123456789",
+    name: "Jason Momoa",
+    email: "jason@gmail.com",
+    password: "Jason123",
+  },
+  {
+    id: "987654321",
+    name: "Stephan kadner",
+    email: "stephan@gmail.com",
+    password: "Stephan123",
+  },
+  {
+    id: "147258369",
+    name: "Tony Stark",
+    email: "tony@gmail.com",
+    password: "Tony123",
+  },
+  {
+    id: "963852741",
+    name: "Peter Moonlit",
+    email: "peter@gmail.com",
+    password: "Peter123",
+  },
+  {
+    id: "741852963",
+    name: "James Bond",
+    email: "james@gmail.com",
+    password: "James007",
+  },
+  {
+    id: "741834563",
+    name: "Scarlet White",
+    email: "scarlet@gmail.com",
+    password: "Scarlet000",
+  },
 ];
 
 // 3. Define the shape of your context
