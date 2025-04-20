@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { List } from "../data/shoppingList"; // adjust path if needed
+import { useUser } from "../user";
 import { v4 as uuidv4 } from "uuid";
+import { saveList } from "../utils/localStorage";
 
 const CreateList = () => {
+  const [showMessage, setShowMessage] = useState(false);
   const [listName, setListName] = useState("");
   const [state, setState] = useState<"Active" | "Archived">("Active");
   const navigate = useNavigate();
+  const user = useUser();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,21 +18,31 @@ const CreateList = () => {
     const newList: List = {
       id: uuidv4(),
       shoppingListName: listName,
+      userName: user.name,
       state,
-      ownerId: "user-id-placeholder", // Replace this with actual user context
+      ownerId: user.id,
       invitedUsers: [],
     };
 
-    // Save to local state or server — depending on your setup
-    console.log("Creating list:", newList);
+    saveList(newList);
+    console.log("New List Created:", newList); // console log shows that the message was "created"
 
-    // Redirect back to dashboard or wherever
-    navigate(`/dashboard/${newList.id}`);
+    setShowMessage(true);
+    setTimeout(() => {
+      navigate(`/dashboard/${newList.id}`); // simulate navigation after 1.5 sec
+    }, 1500);
   };
+
+  // ToDo: Save to actual data source (state, DB, etc.)
 
   return (
     <div className="container mt-4">
       <h2>Create New Shopping List</h2>
+
+      {showMessage && (
+        <div className="alert alert-success">✅ List created successfully!</div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">List Name</label>
