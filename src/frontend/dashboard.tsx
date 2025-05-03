@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getStoredLists } from "../utils/localStorage";
+import { useParams, useNavigate } from "react-router-dom";
+import { getStoredLists, deleteList } from "../utils/localStorage";
 import itemsList, { Item } from "../data/itemList";
-import { Dropdown } from "react-bootstrap";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import Icon from "@mdi/react";
 import { mdiCheck, mdiRefresh } from "@mdi/js";
+import DropdownMenu from "./components/dropdownMenu";
 
 const Dashboard = () => {
-  const { listId } = useParams<{ listId: string }>(); // Retrieve listId from the URL
+  const { listId } = useParams<{ listId: string }>();
+  const navigate = useNavigate();
   const shoppingLists = getStoredLists();
   const selectedList = shoppingLists.find((list) => list.id === listId);
   const [items, setItems] = useState<Item[]>([]);
@@ -39,33 +39,34 @@ const Dashboard = () => {
     );
   };
 
+  const handleDeleteList = (listId: string) => {
+    deleteList(listId);
+    navigate("/"); // Redirect to homepage after deletion
+  };
+
   if (!selectedList) {
     return <h1>List not found</h1>;
   }
 
   return (
     <>
-      <div className="listInfo">
+      <div
+        className="listInfo"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <h1 id="listStateInfo">
           {selectedList.state} &gt; {selectedList.shoppingListName}
-          <Dropdown align="end">
-            <Dropdown.Toggle
-              as="button"
-              className="btn btn-link p-0 border-0"
-              style={{ color: "white" }}
-            >
-              <BsThreeDotsVertical size={30} />
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item>Edit List</Dropdown.Item>
-              <Dropdown.Item className="text-danger">Delete List</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
         </h1>
+        <DropdownMenu
+          listId={selectedList.id}
+          onDelete={() => handleDeleteList(selectedList.id)}
+        />
       </div>
 
-      {/* Active Items */}
       <div className="listSection">
         <h2>Active Items:</h2>
         {activeItems.map((item) => (
@@ -81,7 +82,6 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Completed Items */}
       <div className="listSection">
         <h2>Already Bought:</h2>
         {completedItems.map((item) => (
