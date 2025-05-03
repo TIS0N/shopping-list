@@ -8,7 +8,7 @@ import { saveList } from "../utils/localStorage";
 const CreateList = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [listName, setListName] = useState("");
-  const [state, setState] = useState<"Active" | "Archived">("Active");
+  const state = "Active";
   const navigate = useNavigate();
   const user = useUser();
 
@@ -53,18 +53,6 @@ const CreateList = () => {
             onChange={(e) => setListName(e.target.value)}
             required
           />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">State</label>
-          <select
-            className="form-select"
-            value={state}
-            onChange={(e) => setState(e.target.value as "Active" | "Archived")}
-          >
-            <option value="Active">Active</option>
-            <option value="Archived">Archived</option>
-          </select>
         </div>
 
         <button type="submit" className="btn btn-primary">

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Dashboard from "./frontend/dashboard";
 import CreateList from "./frontend/createList";
+import EditList from "./frontend/editList";
 import React, { useState } from "react";
 import Sidebar from "./frontend/components/sidebar";
 import shoppingLists from "./data/shoppingList";
@@ -37,6 +38,7 @@ const App: React.FC = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/:listId" element={<Dashboard />} />
           <Route path="/createList" element={<CreateList />} />
+          <Route path="/editList/:listId" element={<EditList />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>
