@@ -19,7 +19,9 @@ export const getStoredLists = (): List[] => {
 };
 
 export const saveList = (list: List) => {
-  const stored = getStoredLists().filter(l => !defaultLists.some(d => d.id === l.id)); // only store non-default
+  const stored = getStoredLists().filter(
+    (l) => l.id !== list.id && !defaultLists.some(d => d.id === l.id)
+  );
   localStorage.setItem(STORAGE_KEY, JSON.stringify([...stored, list]));
 };
 
