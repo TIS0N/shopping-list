@@ -111,6 +111,7 @@ const Sidebar: React.FC<SidebarProps> = ({ show, handleClose }) => {
                 <DropdownMenu
                   listId={list.id}
                   onDelete={() => handleDeleteList(list.id)}
+                  handleClose={handleClose}
                 />
               </li>
             ))}
@@ -138,6 +139,7 @@ const Sidebar: React.FC<SidebarProps> = ({ show, handleClose }) => {
                 <DropdownMenu
                   listId={list.id}
                   onDelete={() => handleDeleteList(list.id)}
+                  handleClose={handleClose}
                 />
               </li>
             ))}

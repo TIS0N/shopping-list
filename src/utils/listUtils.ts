@@ -1,3 +1,4 @@
+/*
 import { List } from "../data/shoppingList";
 
 export const deleteListFromStorage = (listId: string) => {
@@ -9,3 +10,4 @@ export const deleteListFromStorage = (listId: string) => {
 export const getUpdatedLists = (): List[] => {
   return JSON.parse(localStorage.getItem("shoppingLists") || "[]");
 };
+*/

@@ -1,4 +1,3 @@
-// src/components/ListDropdown.tsx
 import React from "react";
 import { Dropdown } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -7,12 +6,18 @@ import { useNavigate } from "react-router-dom";
 type ListDropdownProps = {
   listId: string;
   onDelete: () => void;
+  handleClose?: () => void;
 };
 
-const DropdownMenu: React.FC<ListDropdownProps> = ({ listId, onDelete }) => {
+const DropdownMenu: React.FC<ListDropdownProps> = ({
+  listId,
+  onDelete,
+  handleClose,
+}) => {
   const navigate = useNavigate();
 
   const handleEdit = () => {
+    if (handleClose) handleClose();
     navigate(`/editList/${listId}`);
   };
 
