@@ -41,7 +41,7 @@ const Dashboard = () => {
 
   const handleDeleteList = (listId: string) => {
     deleteList(listId);
-    navigate("/"); // Redirect to homepage after deletion
+    navigate("/startPage"); // Redirect to homepage after deletion
   };
 
   if (!selectedList) {

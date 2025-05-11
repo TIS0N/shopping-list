@@ -30,7 +30,9 @@ const ShoppingListsView: React.FC = () => {
               </div>
               <span
                 className={`badge ${
-                  list.state === "archived" ? "bg-success" : "bg-secondary"
+                  list.state.toLowerCase() === "archived"
+                    ? "bg-success"
+                    : "bg-secondary"
                 }`}
               >
                 {list.state}
