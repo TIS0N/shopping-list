@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { List } from "../data/shoppingList"; // adjust path if needed
+import { List } from "../data/shoppingList";
 import { useUser } from "../user";
 import { v4 as uuidv4 } from "uuid";
 import { saveList } from "../utils/localStorage";
+import { useTranslation } from "react-i18next";
 
 const CreateList = () => {
+  const { t } = useTranslation();
   const [showMessage, setShowMessage] = useState(false);
   const [listName, setListName] = useState("");
   const state = "Active";
@@ -25,27 +27,27 @@ const CreateList = () => {
     };
 
     saveList(newList);
-    console.log("New List Created:", newList); // console log shows that the message was "created"
+    console.log("New List Created:", newList);
 
     setShowMessage(true);
     setTimeout(() => {
-      navigate(`/dashboard/${newList.id}`); // simulate navigation after 1.5 sec
+      navigate(`/dashboard/${newList.id}`);
     }, 1500);
   };
 
-  // ToDo: Save to actual data source (state, DB, etc.)
-
   return (
     <div className="container mt-4">
-      <h2>Create New Shopping List</h2>
+      <h2>{t("createNewList")}</h2>
 
       {showMessage && (
-        <div className="alert alert-success">✅ List created successfully!</div>
+        <div className="alert alert-success">
+          {t("listCreatedSuccessfully")}
+        </div>
       )}
 
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label">List Name</label>
+          <label className="form-label">{t("listNameLabel")}</label>
           <input
             type="text"
             className="form-control"
@@ -56,7 +58,7 @@ const CreateList = () => {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          Create List
+          {t("createListButton")}
         </button>
       </form>
     </div>

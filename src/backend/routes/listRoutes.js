@@ -22,7 +22,16 @@ router.post('/', authMiddleware, createShoppingList);
 router.delete('/:id', authMiddleware, deleteShoppingList);
 
 // Route to update/edit a shopping list (protected)
-router.put('/:id', authMiddleware, updateShoppingList);
+router.put('/:id', authMiddleware, async (req, res) => {
+  console.log('🛬 PUT reached route handler');
+
+  try {
+    await updateShoppingList(req, res);
+  } catch (err) {
+    console.error('🔥 Error before hitting controller:', err);
+    res.status(500).json({ message: 'Unexpected error' });
+  }
+});
 
 // Route to get a single shopping list (protected)
 router.get('/:id', authMiddleware, getSingleShoppingList);

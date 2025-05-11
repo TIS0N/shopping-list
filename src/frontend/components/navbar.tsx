@@ -26,20 +26,22 @@ const Header: React.FC<HeaderProps> = ({ onToggleSidebar, isSidebarOpen }) => {
 };
 
 export default Header;
-*/
-import React from "react";
+*/ import React from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { mdiMenu } from "@mdi/js";
-import Icon from "@mdi/react"; // for the burger icon
+import Icon from "@mdi/react";
+import { useTranslation } from "react-i18next";
 
 type NavbarProps = {
   onToggleSidebar: () => void; // Function to handle sidebar opening/closing
 };
 
 const AppNavbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
+  const { t } = useTranslation();
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand id="logo">ShoppingListApp</Navbar.Brand>
+      <Navbar.Brand id="logo">{t("appTitle")}</Navbar.Brand>
       <Nav className="ml-auto">
         {/* Burger Menu Icon */}
         <Button
