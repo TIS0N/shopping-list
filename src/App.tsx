@@ -19,6 +19,7 @@ import "./frontend/CSS/sidebar.css";
 import "./frontend/CSS/dashboardStyle.css";
 import "./frontend/CSS/startPageStyle.css";
 import "./App.css";
+import "./i18n";
 
 const App: React.FC = () => {
   const [showSidebar, setShowSidebar] = useState(false);

@@ -1,70 +1,118 @@
-/*
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Default light mode styles */
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+/* Button styles */
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button.dark-mode {
+  background-color: #444;
+  color: white;
+}
+
+button.dark-mode:hover {
+  background-color: #333;
+}
+
+/* Ensure that specific component styles do not override in light or dark modes */
+
+/* dashboardStyle.css adjustments */
+.listInfo {
+  background-color: rgb(180, 180, 180);
+  transition: background-color 0.3s;
+}
+
+body.dark-mode .listInfo {
+  background-color: #333; /* Darker background for listInfo in dark mode */
+}
+
+.itemCard {
+  background-color: #2e5671;
+  color: white;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .itemCard {
+  background-color: #4d4d4d; /* Slightly darker card background in dark mode */
+}
+
+body.dark-mode .itemCard.completed {
+  background-color: #444; /* Completed items with a different color in dark mode */
+}
+
+/* sidebar.css adjustments */
+#sidebar {
+  background-color: #343841;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+body.dark-mode #sidebar {
+  background-color: #2d2f35; /* Slightly darker sidebar in dark mode */
+}
+
+#listButton {
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+body.dark-mode #listButton {
+  background-color: #444;
+}
+
+body.dark-mode #listButton:hover {
+  background-color: #333;
+}
+
+/* startPage.css adjustments */
+.createButtonDiv {
+  padding-top: 50px;
+  transition: background-color 0.3s;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover {
+  background-color: #0056b3;
 }
-*/
+
+body.dark-mode button {
+  background-color: #444;
+  color: white;
+}
+
+body.dark-mode button:hover {
+  background-color: #333;
+}
+
+/* Additional transitions for elements across the app for smoother change */
+* {
+  transition: all 0.3s ease-in-out;
+}

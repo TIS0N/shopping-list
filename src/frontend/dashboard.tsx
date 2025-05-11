@@ -5,8 +5,10 @@ import itemsList, { Item } from "../data/itemList";
 import Icon from "@mdi/react";
 import { mdiCheck, mdiRefresh } from "@mdi/js";
 import DropdownMenu from "./components/dropdownMenu";
+import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const { listId } = useParams<{ listId: string }>();
   const navigate = useNavigate();
   const shoppingLists = getStoredLists();
@@ -45,7 +47,7 @@ const Dashboard = () => {
   };
 
   if (!selectedList) {
-    return <h1>List not found</h1>;
+    return <h1>{t("listNotFound")}</h1>;
   }
 
   return (
@@ -68,7 +70,7 @@ const Dashboard = () => {
       </div>
 
       <div className="listSection">
-        <h2>Active Items:</h2>
+        <h2>{t("activeItems")}</h2>
         {activeItems.map((item) => (
           <div key={item.id} className="itemCard">
             {item.itemName}
@@ -83,7 +85,7 @@ const Dashboard = () => {
       </div>
 
       <div className="listSection">
-        <h2>Already Bought:</h2>
+        <h2>{t("alreadyBought")}</h2>
         {completedItems.map((item) => (
           <div key={item.id} className="itemCard completed">
             {item.itemName}

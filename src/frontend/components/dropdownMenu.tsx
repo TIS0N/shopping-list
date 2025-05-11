@@ -2,6 +2,7 @@ import React from "react";
 import { Dropdown } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type ListDropdownProps = {
   listId: string;
@@ -14,6 +15,7 @@ const DropdownMenu: React.FC<ListDropdownProps> = ({
   onDelete,
   handleClose,
 }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleEdit = () => {
@@ -24,7 +26,6 @@ const DropdownMenu: React.FC<ListDropdownProps> = ({
   return (
     <Dropdown align="end">
       <Dropdown.Toggle
-        /*as="button"*/
         variant="link"
         className="btn btn-link p-0 border-0"
         style={{ color: "white" }}
@@ -33,9 +34,9 @@ const DropdownMenu: React.FC<ListDropdownProps> = ({
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={handleEdit}>Edit List</Dropdown.Item>
+        <Dropdown.Item onClick={handleEdit}>{t("editList")}</Dropdown.Item>
         <Dropdown.Item className="text-danger" onClick={onDelete}>
-          Delete List
+          {t("deleteList")}
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

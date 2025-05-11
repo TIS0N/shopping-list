@@ -1,8 +1,10 @@
 import React from "react";
 import shoppingLists from "../../data/shoppingList";
 import { useUser } from "../../user";
+import { useTranslation } from "react-i18next";
 
 const ShoppingListsView: React.FC = () => {
+  const { t } = useTranslation();
   const user = useUser();
 
   // Filter lists where the user is the owner or invited
@@ -12,9 +14,9 @@ const ShoppingListsView: React.FC = () => {
 
   return (
     <div style={{ padding: "1rem" }}>
-      <h2>Your Shopping Lists</h2>
+      <h2>{t("yourShoppingLists")}</h2>
       {userLists.length === 0 ? (
-        <p>No shopping lists found for you.</p>
+        <p>{t("noShoppingListsFound")}</p>
       ) : (
         <ul className="list-group">
           {userLists.map((list) => (
@@ -25,7 +27,7 @@ const ShoppingListsView: React.FC = () => {
               <div>
                 <strong>{list.shoppingListName}</strong>
                 <div style={{ fontSize: "0.9rem", color: "#666" }}>
-                  Owner: {list.userName}
+                  {t("owner")}: {list.userName}
                 </div>
               </div>
               <span

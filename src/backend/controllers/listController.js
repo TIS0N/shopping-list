@@ -86,18 +86,21 @@ export const updateShoppingList = async (req, res) => {
 
     const { name, items } = req.body;
 
-      // Remove _id from each item to prevent MongoDB update conflict
-    const sanitizedItems = items.map(({ _id, ...rest }) => rest);
+    if (!name && (!items || !Array.isArray(items))) {
+      return res.status(400).json({ message: 'No fields to update' });
+    }
+
+    let updateFields = {};
+    if (name) updateFields.name = name;
+    if (Array.isArray(items)) {
+      updateFields.items = items.map(({ _id, ...rest }) => rest);
+    }
 
     const list = await ShoppingList.findOneAndUpdate(
       { _id: req.params.id, user: req.userId },
-      { name, items: sanitizedItems },
+      updateFields,
       { new: true }
     );
-
-    if (!name && (!items || !Array.isArray(items))) {
-        return res.status(400).json({ message: 'No fields to update' });
-    }
 
     if (!list) {
       console.log('List not found or unauthorized');
@@ -110,3 +113,4 @@ export const updateShoppingList = async (req, res) => {
     res.status(500).json({ message: 'Error updating shopping list' });
   }
 };
+
