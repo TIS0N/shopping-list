@@ -24,7 +24,8 @@ const DropdownMenu: React.FC<ListDropdownProps> = ({
   return (
     <Dropdown align="end">
       <Dropdown.Toggle
-        as="button"
+        /*as="button"*/
+        variant="link"
         className="btn btn-link p-0 border-0"
         style={{ color: "white" }}
       >

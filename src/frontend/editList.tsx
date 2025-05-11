@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { List } from "../data/shoppingList";
-import { useUser } from "../user";
+//import { useUser } from "../user";
 import { getStoredLists, saveList, deleteList } from "../utils/localStorage";
 import DropdownMenu from "./components/dropdownMenu";
 
@@ -11,7 +11,7 @@ const EditList = () => {
   const [listName, setListName] = useState("");
   const [state, setState] = useState<"Active" | "Archived">("Active");
   const navigate = useNavigate();
-  const user = useUser();
+  //const user = useUser();
 
   const handleDeleteList = (listId: string) => {
     deleteList(listId);

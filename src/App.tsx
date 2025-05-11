@@ -17,6 +17,7 @@ import AppNavbar from "./frontend/components/navbar";
 import "./frontend/CSS/navbar.css";
 import "./frontend/CSS/sidebar.css";
 import "./frontend/CSS/dashboardStyle.css";
+import "./frontend/CSS/startPageStyle.css";
 import "./App.css";
 
 const App: React.FC = () => {
