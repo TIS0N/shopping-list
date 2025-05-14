@@ -1,24 +1,12 @@
-// backend/middleware/authMiddleware.js
-import jwt from 'jsonwebtoken';
+const mockAuthMiddleware = (req, res, next) => {
+  const userId = req.headers['user-id'];
 
-const authMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-
-  // Check for token
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'No token provided' });
+  if (!userId) {
+    return res.status(401).json({ message: 'Missing user-id header' });
   }
 
-  const token = authHeader.split(' ')[1];
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = decoded.userId;
-    next();
-  } catch (err) {
-    console.error('Token verification failed:', err);
-    res.status(401).json({ message: 'Invalid or expired token' });
-  }
+  req.userId = userId;
+  next();
 };
 
-export default authMiddleware;
+export default mockAuthMiddleware;
