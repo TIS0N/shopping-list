@@ -4,7 +4,16 @@ import ShoppingList from '../models/ShoppingList.js';
 // Get all shopping lists for the authenticated user
 export const getShoppingLists = async (req, res) => {
   try {
-    const lists = await ShoppingList.find({ user: req.userId }); // Fetch lists based on the userId in the token
+    const userId = req.userId;
+
+    const lists = await ShoppingList.find({
+      $or: [
+        { userId }, // owner
+        { editors: userId },
+        { viewers: userId }
+      ]
+    });
+
     res.status(200).json(lists);
   } catch (err) {
     console.error(err);
@@ -15,9 +24,8 @@ export const getShoppingLists = async (req, res) => {
 // Create a new shopping list
 export const createShoppingList = async (req, res) => {
   try {
-    const { name, items } = req.body;
+    const { name, items, editors = [], viewers = [], archived = false } = req.body;
 
-    // Check if name is provided
     if (!name || !items || !Array.isArray(items)) {
       return res.status(400).json({ message: 'List name and items are required' });
     }
@@ -25,46 +33,31 @@ export const createShoppingList = async (req, res) => {
     const newList = new ShoppingList({
       name,
       items,
-      user: req.userId, // Associate the list with the logged-in user
+      editors,
+      viewers,
+      archived,
+      userId: req.userId,
     });
-    await newList.save();
 
-    res.status(201).json(newList); // Return the created list
+    await newList.save();
+    res.status(201).json(newList);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error creating shopping list' });
   }
 };
 
-// Delete a shopping list
-export const deleteShoppingList = async (req, res) => {
-  try {
-    console.log('Attempting to delete:', req.params.id);
-    console.log('Authenticated user:', req.userId);
-
-    const list = await ShoppingList.findOneAndDelete({
-      _id: req.params.id,
-      user: req.userId,
-    });
-
-    if (!list) {
-        console.log('No matching list found to delete');
-      return res.status(404).json({ message: 'List not found or unauthorized' });
-    }
-
-    console.log(`List "${list.name}" successfully deleted`);
-    res.status(200).json({ message: `List "${list.name}" successfully deleted` });
-
-  } catch (err) {
-    console.error('Error during delete operation:', err);
-    res.status(500).json({ message: 'Error deleting list' });
-  }
-};
-
 // Get a single shopping list by ID
 export const getSingleShoppingList = async (req, res) => {
   try {
-    const list = await ShoppingList.findOne({ _id: req.params.id, user: req.userId });
+    const list = await ShoppingList.findOne({
+      _id: req.params.id,
+      $or: [
+        { userId: req.userId },
+        { editors: req.userId },
+        { viewers: req.userId }
+      ]
+    });
 
     if (!list) {
       return res.status(404).json({ message: 'List not found or unauthorized' });
@@ -80,33 +73,29 @@ export const getSingleShoppingList = async (req, res) => {
 // Update a shopping list
 export const updateShoppingList = async (req, res) => {
   try {
-    console.log('Received body:', req.body);
-    console.log('Received ID:', req.params.id);
-    console.log('Authenticated user:', req.userId);
+    const { name, items, editors, viewers, archived } = req.body;
 
-    const { name, items } = req.body;
-
-    if (!name && (!items || !Array.isArray(items))) {
-      return res.status(400).json({ message: 'No fields to update' });
-    }
-
-    let updateFields = {};
-    if (name) updateFields.name = name;
-    if (Array.isArray(items)) {
-      updateFields.items = items.map(({ _id, ...rest }) => rest);
-    }
-
-    const list = await ShoppingList.findOneAndUpdate(
-      { _id: req.params.id, user: req.userId },
-      updateFields,
-      { new: true }
-    );
+    const list = await ShoppingList.findOne({
+      _id: req.params.id,
+      $or: [
+        { userId: req.userId },
+        { editors: req.userId }
+      ]
+    });
 
     if (!list) {
-      console.log('List not found or unauthorized');
       return res.status(404).json({ message: 'List not found or unauthorized' });
     }
 
+    if (name !== undefined) list.name = name;
+    if (Array.isArray(items)) {
+      list.items = items.map(({ _id, ...rest }) => rest); // strip Mongo _id if coming from frontend
+    }
+    if (Array.isArray(editors)) list.editors = editors;
+    if (Array.isArray(viewers)) list.viewers = viewers;
+    if (typeof archived === 'boolean') list.archived = archived;
+
+    await list.save();
     res.status(200).json(list);
   } catch (err) {
     console.error('Error updating shopping list:', err);
@@ -114,3 +103,21 @@ export const updateShoppingList = async (req, res) => {
   }
 };
 
+// Delete a shopping list
+export const deleteShoppingList = async (req, res) => {
+  try {
+    const list = await ShoppingList.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.userId
+    });
+
+    if (!list) {
+      return res.status(404).json({ message: 'List not found or unauthorized' });
+    }
+
+    res.status(200).json({ message: `List "${list.name}" successfully deleted` });
+  } catch (err) {
+    console.error('Error during delete operation:', err);
+    res.status(500).json({ message: 'Error deleting list' });
+  }
+};

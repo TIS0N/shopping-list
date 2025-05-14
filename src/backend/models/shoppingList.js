@@ -1,32 +1,16 @@
 import mongoose from 'mongoose';
 
 const shoppingListSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,  // List name is required
-    trim: true,      // Removes extra spaces from the string
-  },
+  name: {type: String, required: true, trim: true},
   items: [{
-    name: {
-      type: String,
-      required: true,  // Item name is required
-    },
-    amount: {
-      type: Number,
-      required: true,  // Amount is required
-      min: 0,          // Ensure positive values only
-    },
-    unit: {
-      type: String,
-      enum: ['kg', 'liters', 'pieces'],  // Allowed units for the item
-      required: true,  // Unit is required
-    }
+    name: { type: String, required: true },
+    amount: { type: Number, required: true, min: 0 },
+    unit: { type: String, enum: ['kg', 'liters', 'pieces'], required: true }
   }],
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',    // Reference to the User model
-    required: true, // A list must be associated with a user
-  },
+  userId: { type: String, required: true }, // Owner of the list/by whom the list was created
+  archived: { type: Boolean, default: false }, // List is defaulty set as not archived upon creation
+  editors: [{ type: String }], // Optional editors
+  viewers: [{ type: String }], // Optional viewers
 }, {
   timestamps: true,  // Automatically adds createdAt and updatedAt fields
 });
