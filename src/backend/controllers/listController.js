@@ -93,28 +93,41 @@ export const updateShoppingList = async (req, res) => {
   try {
     const { name, items, editors, viewers, archived } = req.body;
 
-    const list = await ShoppingList.findOne({
-      _id: req.params.id,
-      $or: [
-        { userId: req.userId },
-        { editors: req.userId }
-      ]
-    });
+    const list = await ShoppingList.findById(req.params.id);
 
     if (!list) {
-      return res.status(404).json({ message: 'List not found or unauthorized' });
+      return res.status(404).json({ message: 'List not found' });
     }
 
-    if (name !== undefined) list.name = name;
-    if (Array.isArray(items)) {
-      list.items = items.map(({ _id, ...rest }) => rest); // strip Mongo _id if coming from frontend
+    const isOwner = list.userId === req.userId;
+    const isEditor = list.editors.includes(req.userId);
+
+    if (!isOwner && !isEditor) {
+      return res.status(403).json({ message: 'Unauthorized: only owner or editors can edit the list' });
     }
-    if (Array.isArray(editors)) list.editors = editors;
-    if (Array.isArray(viewers)) list.viewers = viewers;
-    if (typeof archived === 'boolean') list.archived = archived;
+
+    // Editors and owners can update items
+    if (Array.isArray(items)) {
+      list.items = items.map(({ _id, ...rest }) => rest);
+    }
+
+    // Editors and owners can archive/unarchive
+    if (typeof archived === 'boolean') {
+      if (isOwner || isEditor) {
+        list.archived = archived;
+      }
+    }
+
+    // Only owner can update name, editors, and viewers
+    if (isOwner) {
+      if (name !== undefined) list.name = name;
+      if (Array.isArray(editors)) list.editors = editors;
+      if (Array.isArray(viewers)) list.viewers = viewers;
+    }
 
     await list.save();
     res.status(200).json(list);
+
   } catch (err) {
     console.error('Error updating shopping list:', err);
     res.status(500).json({ message: 'Error updating shopping list' });
