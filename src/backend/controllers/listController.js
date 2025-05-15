@@ -1,25 +1,5 @@
 // backend/controllers/listController.js
-import ShoppingList from '../models/ShoppingList.js';
-
-// Get all shopping lists for the authenticated user
-export const getShoppingLists = async (req, res) => {
-  try {
-    const userId = req.userId;
-
-    const lists = await ShoppingList.find({
-      $or: [
-        { userId }, // owner
-        { editors: userId },
-        { viewers: userId }
-      ]
-    });
-
-    res.status(200).json(lists);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error fetching shopping lists' });
-  }
-};
+import ShoppingList from '../models/shoppingList.js';
 
 // Create a new shopping list
 export const createShoppingList = async (req, res) => {
@@ -47,6 +27,37 @@ export const createShoppingList = async (req, res) => {
   }
 };
 
+// Get all shopping lists for the authenticated user
+export const getShoppingLists = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const lists = await ShoppingList.find({
+      $or: [
+        { userId }, // owner
+        { editors: userId },
+        { viewers: userId }
+      ]
+    });
+
+      const enrichedLists = lists.map(list => {
+      const totalItemsCount = list.items.length;
+      const boughtItemsCount = list.items.filter(item => item.status === true).length;
+
+      return {
+        ...list.toObject(),
+        totalItemsCount,
+        boughtItemsCount
+      };
+    });
+
+    res.status(200).json(enrichedLists);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching shopping lists' });
+  }
+};
+
 // Get a single shopping list by ID
 export const getSingleShoppingList = async (req, res) => {
   try {
@@ -63,7 +74,14 @@ export const getSingleShoppingList = async (req, res) => {
       return res.status(404).json({ message: 'List not found or unauthorized' });
     }
 
-    res.status(200).json(list);
+    const totalItemsCount = list.items.length;
+    const boughtItemsCount = list.items.filter(item => item.status === true).length;
+
+    res.status(200).json({
+      ...list.toObject(),
+      totalItemsCount,
+      boughtItemsCount
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error fetching the shopping list' });
